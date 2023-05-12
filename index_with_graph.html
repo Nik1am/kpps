@@ -1,0 +1,38 @@
+<textarea id="input"></textarea>
+<p id="t_dbg"></p>
+<canvas width="400" height="300" style="border:2px solid;"></canvas>
+<script>
+const average = list => list.reduce((prev, curr) => prev + curr) / list.length;
+timings = []
+diffs = []
+window.onload = () => {
+    input = document.getElementById("input")
+    t_dbg = document.getElementById("t_dbg")
+    canvas = document.querySelector("canvas")
+    ctx = canvas.getContext('2d')
+    ctx.font = "12px serif";
+    input.oninput = () => {
+        ctx.clearRect(0,0,canvas.width,canvas.height)
+        ctx.beginPath();
+        ctx.moveTo(0,canvas.height)
+
+        t = new Date().getTime()
+        timings.push(t)
+        for(i = timings.length-1; i>0; i--){
+            diffs[i-1] = timings[i]-timings[i-1]
+            max = Math.max(...diffs)
+            ctx.lineTo((timings.length-i)*(canvas.width/timings.length),canvas.height-(timings[i]-timings[i-1])/max*canvas.height);
+
+            ctx.fillText(timings[i]-timings[i-1], (timings.length-i)*(canvas.width/timings.length), canvas.height-(timings[i]-timings[i-1])/max*canvas.height);
+        }
+        ctx.stroke()
+        if(timings.length>30){
+            timings.shift()
+        }
+        
+
+
+        t_dbg.innerText = `BPS: ${1/(average(diffs)/1000)} \n BPM: ${(1/(average(diffs)/1000)*60)} \n Osu! BPM: ${(1/(average(diffs)/1000)*60/4)}`
+    }
+}
+</script>
