@@ -18,7 +18,7 @@ window.onload = () => {
         if(timings.length>10){
             timings.shift()
         }
-        t_dbg.innerText = `${1/(average(diffs)/1000)}`
+        t_dbg.innerText = `BPS: ${1/(average(diffs)/1000)} \n BPM: ${(1/(average(diffs)/1000)*60)} \n Osu! BPM: ${(1/(average(diffs)/1000)*60/4)}`
 
     }
 }
