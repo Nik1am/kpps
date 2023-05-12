@@ -11,15 +11,14 @@ window.onload = () => {
     input.oninput = () => {
         t = new Date().getTime()
         timings.push(t)
-
         for(i = timings.length-1; i>0; i--){
-            diffs.push(timings[i]-timings[i-1])
+            diffs[i-1] = timings[i]-timings[i-1]
         }
         if(timings.length>10){
             timings.shift()
         }
+        
         t_dbg.innerText = `BPS: ${1/(average(diffs)/1000)} \n BPM: ${(1/(average(diffs)/1000)*60)} \n Osu! BPM: ${(1/(average(diffs)/1000)*60/4)}`
-
     }
 }
 </script>
