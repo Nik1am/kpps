@@ -1,0 +1,25 @@
+<textarea id="input"></textarea>
+<p id="t_dbg"></p>
+<script>
+const average = list => list.reduce((prev, curr) => prev + curr) / list.length;
+timings = []
+diffs = []
+window.onload = () => {
+    input = document.getElementById("input")
+    t_dbg = document.getElementById("t_dbg")
+
+    input.oninput = () => {
+        t = new Date().getTime()
+        timings.push(t)
+
+        for(i = timings.length-1; i>0; i--){
+            diffs.push(timings[i]-timings[i-1])
+        }
+        if(timings.length>10){
+            timings.shift()
+        }
+        t_dbg.innerText = `${1/(average(diffs)/1000)}`
+
+    }
+}
+</script>
